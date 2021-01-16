@@ -105,7 +105,6 @@ export default class NylasConnection {
       options.headers['User-Agent'] = `Nylas Node SDK v${SDK_VERSION}`;
     }
 
-    options.headers['Nylas-API-Version'] = SUPPORTED_API_VERSION;
     options.headers['Nylas-SDK-API-Version'] = SUPPORTED_API_VERSION;
     options.headers['X-Nylas-Client-Id'] = this.clientId;
 
