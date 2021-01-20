@@ -1,12 +1,8 @@
 import request from 'request';
 import * as config from './config';
-import NylasConnection from './nylas-connection';
-import ManagementAccount from './models/management-account';
-import Account from './models/account';
+import NylasConnection, { RestfulModelCollection } from './nylas-connection';
+import { Account } from './nylas-connection';
 import Connect from './models/connect';
-import RestfulModelCollection from './models/restful-model-collection';
-import ManagementModelCollection from './models/management-model-collection';
-import Webhook from './models/webhook';
 
 class Nylas {
   static clientId = '';
@@ -22,11 +18,8 @@ class Nylas {
   static set apiServer(newApiServer: string | null) {
     config.setApiServer(newApiServer);
   }
-  static accounts?:
-    | ManagementModelCollection<ManagementAccount>
-    | RestfulModelCollection<Account>;
+  static accounts?: RestfulModelCollection<Account>;
   static connect?: Connect;
-  static webhooks?: ManagementModelCollection<Webhook>;
 
   static config({
     clientId,
@@ -59,20 +52,7 @@ class Nylas {
       clientId: this.clientId,
     });
     this.connect = new Connect(conn, this.clientId, this.clientSecret);
-    this.webhooks = new ManagementModelCollection(
-      Webhook,
-      conn,
-      this.clientId!
-    );
-    if (this.clientCredentials()) {
-      this.accounts = new ManagementModelCollection(
-        ManagementAccount,
-        conn,
-        this.clientId!
-      );
-    } else {
-      this.accounts = new RestfulModelCollection(Account, conn);
-    }
+    this.accounts = new RestfulModelCollection(Account, conn);
 
     return this;
   }
