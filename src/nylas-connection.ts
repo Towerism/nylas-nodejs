@@ -913,6 +913,7 @@ export class Event extends RestfulModel {
   participants?: EventParticipant[];
   readOnly?: boolean;
   location?: string;
+  masterEventId?: string;
   when?: {
     start_time?: number;
     end_time?: number;
@@ -1039,6 +1040,10 @@ Event.attributes = {
   calendarId: Attributes.String({
     modelKey: 'calendarId',
     jsonKey: 'calendar_id',
+  }),
+  masterEventId: Attributes.String({
+    modelKey: 'masterEventId',
+    jsonKey: 'master_event_id',
   }),
   iCalUID: Attributes.String({
     modelKey: 'iCalUID',
